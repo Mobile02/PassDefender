@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PassDefender
+{
+    class Randomizer
+    {
+        public string RndString(int countSymbol)
+        {
+            string rndString = "";
+            Random random = new Random();
+            int rnd;
+            for (int i = 0; i < countSymbol; i++)
+            {
+                rnd = random.Next(32, 126);
+                rndString += (char)rnd;
+            }
+            return rndString;
+        }
+    }
+}

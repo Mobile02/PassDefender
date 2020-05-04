@@ -1,0 +1,104 @@
+﻿<Window x:Name="FormPassDefender" x:Class="PassDefender.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PassDefender"
+        mc:Ignorable="d"
+        Title="Хранитель паролей" Height="300" Width="800" MinWidth="650" MinHeight="200" Icon="resourse/main.ico" Closing="FormPassDefender_Closing">
+    <Window.Resources>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="White"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid x:Name="dataGrid" Margin="1,1,1,30" SelectionUnit="Cell" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" Loaded="DataGrid_Loaded" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Описание ресурса" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Margin="1" Padding="2" Text="{Binding Path=Info, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Логин" Width="200" MinWidth="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,26,1" Padding="2" Text="{Binding Path=Login, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="Скопировать логин в буфер обмена" Click="Button_copyLogin_Click">
+                                    <StackPanel Width="18" Height="18">
+                                        <Image Source="/resourse/copy_clipboard.ico"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Пароль" Width="200" MinWidth="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,48,1" Padding="2" Text="{Binding Path=Password, UpdateSourceTrigger=LostFocus}" FontFamily="Yu Gothic"></TextBox>
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="Скопировать пароль в буфер обмена" Click="Button_copy_Click">
+                                    <StackPanel Width="18" Height="18">
+                                        <Image Source="/resourse/copy_clipboard.ico"></Image>
+                                    </StackPanel>
+                                </Button>
+                                <Button Width="21" Height="21" Margin="1,1,24,1" HorizontalAlignment="Right" ToolTip="Сгенерировать случайный пароль" Click="Button_generetion_Click">
+                                    <StackPanel Width="18" Height="18">
+                                        <Image Source="/resourse/generator.ico"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" Background="#FFF6F7F9">
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Center" ToolTip="Удалить запись" Click="Button_Delete_Click">
+                                    <StackPanel Width="18" Height="18">
+                                        <Image Source="/resourse/delete.ico"></Image>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="buttonAdd" HorizontalAlignment="Right" Margin="0,0,2,2" VerticalAlignment="Bottom" Width="140" Height="26" Click="buttonAdd_Click">
+            <StackPanel Width="140" Height="26" Orientation="Horizontal">
+                <Image Source="/resourse/addrow.ico" Margin="0,0,0,5"></Image>
+                <Label Content="Добавить запись" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="buttonSave" HorizontalAlignment="Left" Margin="1,0,0,2" VerticalAlignment="Bottom" Width="140" Height="26" Click="buttonSave_Click">
+            <StackPanel Width="140" Height="26" Orientation="Horizontal">
+                <Image Source="/resourse/saveok.ico" Margin="0,0,0,5"></Image>
+                <Label Content="Сохранить" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5" Margin="15,0,0,0"/>
+            </StackPanel>
+        </Button>
+        <ProgressBar x:Name="progressBar" Height="26" Margin="180,0,180,2" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled" Maximum="2000"/>
+        <Label x:Name="LabelInfo" Content="" HorizontalAlignment="Center" Margin="0,0,20,3" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Visibility="Hidden"/>
+    </Grid>
+</Window>

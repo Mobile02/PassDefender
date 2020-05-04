@@ -10,8 +10,6 @@ namespace PassDefender
 {
     class FileOperation
     {
-        private Data _dataString;
-
         public void SaveFile(string path, List<Data> data, Body body)
         {
             StreamWriter streamWriter = new StreamWriter(path);
@@ -31,20 +29,21 @@ namespace PassDefender
         {
             StreamReader streamReader = new StreamReader(path);
             List<Data> listData = new List<Data>();
+            Data dataString;
 
             while (!streamReader.EndOfStream)
             {
                 Crypto crypto = new Crypto();
                 string _passPhrase = new DecryptPass(body.PassPhrase, body).Decrypt();
 
-                _dataString = new Data
+                dataString = new Data
                     (
                     crypto.Decrypt(streamReader.ReadLine(), _passPhrase, body.SaltValue, body.InitVector),
                     crypto.Decrypt(streamReader.ReadLine(), _passPhrase, body.SaltValue, body.InitVector),
                     crypto.Decrypt(streamReader.ReadLine(), _passPhrase, body.SaltValue, body.InitVector),
                     body
                     );
-                listData.Add(_dataString);
+                listData.Add(dataString);
             }
             streamReader.Close();
             return listData;

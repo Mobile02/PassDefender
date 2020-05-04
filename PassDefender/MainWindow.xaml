@@ -86,13 +86,13 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="buttonAdd" HorizontalAlignment="Right" Margin="0,0,2,2" VerticalAlignment="Bottom" Width="140" Height="26" Click="buttonAdd_Click">
+        <Button x:Name="buttonAdd" HorizontalAlignment="Right" Margin="0,0,2,2" VerticalAlignment="Bottom" Width="140" Height="26">
             <StackPanel Width="140" Height="26" Orientation="Horizontal">
                 <Image Source="/resourse/addrow.ico" Margin="0,0,0,5"></Image>
                 <Label Content="Добавить запись" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5"/>
             </StackPanel>
         </Button>
-        <Button x:Name="buttonSave" HorizontalAlignment="Left" Margin="1,0,0,2" VerticalAlignment="Bottom" Width="140" Height="26" Click="buttonSave_Click">
+        <Button x:Name="buttonSave" HorizontalAlignment="Left" Margin="1,0,0,2" VerticalAlignment="Bottom" Width="140" Height="26">
             <StackPanel Width="140" Height="26" Orientation="Horizontal">
                 <Image Source="/resourse/saveok.ico" Margin="0,0,0,5"></Image>
                 <Label Content="Сохранить" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5" Margin="15,0,0,0"/>

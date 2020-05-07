@@ -6,6 +6,10 @@
         xmlns:local="clr-namespace:PassDefender"
         mc:Ignorable="d"
         Title=" Информация" Height="210" Width="500" ScrollViewer.VerticalScrollBarVisibility="Disabled" WindowStyle="ToolWindow" WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <local:DataGridViewModel></local:DataGridViewModel>
+    </Window.DataContext>
+    
     <Grid>
         <TextBlock Margin="0,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="132" Width="374" FontWeight="Bold" HorizontalAlignment="Right"><Run Text="&#x9;&#x9;"/><Run Text="Первый запуск программы"/><Run Text="!"/><Run Text=" "/><LineBreak/><Run Text="Необходимо ввести пароль, для защиты базы паролей от несанкционированного доступа"/><Run Text="."/><LineBreak/><Run Text=""/><LineBreak/><Run Text="Если вы увидели это сообщение по какой то другой причине, введите старый пароль и продолжайте пользоваться программой."/><Run Text=" Если пароль введен правильно, все данные будут "/><Run Text="доступны для дальней"/><Run Text="ш"/><Run Text="его использования."/></TextBlock>
         <Image HorizontalAlignment="Left" Height="81" Margin="10,45,0,0" VerticalAlignment="Top" Width="81" Source="/resourse/attention.ico"/>

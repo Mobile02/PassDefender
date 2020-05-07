@@ -1,0 +1,23 @@
+﻿<Window x:Class="PassDefender.WindowVerify"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PassDefender"
+        mc:Ignorable="d"
+        Title="WindowVerify" Height="85" Width="205" WindowStyle="None" ResizeMode="NoResize" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <local:WindowVerifyViewModel></local:WindowVerifyViewModel>
+    </Window.DataContext>
+
+    <Grid FocusManager.FocusedElement="{Binding ElementName=textBox}">
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="12,11,0,0" VerticalAlignment="Top"/>
+        <Button Content="{Binding ButtonContent}" HorizontalAlignment="Left" Margin="17,50,0,0" VerticalAlignment="Top" Width="75" Height="19"
+                Command="{Binding Command_Button_Enter}" IsDefault="True" Click="Button_Click"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="66,15,0,0" VerticalAlignment="Top" Width="120" Height="22"
+                 Text="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <Button Content="Выход" HorizontalAlignment="Left" Margin="111,50,0,0" VerticalAlignment="Top" Width="75" Height="19" IsCancel="True"
+                 Command="{Binding Command_Button_Exit}"/>
+
+    </Grid>
+</Window>

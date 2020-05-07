@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -10,43 +11,40 @@ namespace PassDefender
 {
     class FileOperation
     {
-        public void SaveFile(string path, List<Data> data, Body body)
+        public void SaveFile(string path, ObservableCollection<TableModel> dataCollections)
         {
             StreamWriter streamWriter = new StreamWriter(path);
             Crypto crypto = new Crypto();
-            string _passPhrase = new DecryptPass(body.PassPhrase, body).Decrypt();
+            CryptoModel cryptoModel = new CryptoModel();
 
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < dataCollections.Count; i++)
             {
-                streamWriter.WriteLine(crypto.Encrypt(data[i].Login, _passPhrase, body.SaltValue, body.InitVector));
-                streamWriter.WriteLine(crypto.Encrypt(data[i].Password, _passPhrase, body.SaltValue, body.InitVector));
-                streamWriter.WriteLine(crypto.Encrypt(data[i].Info, _passPhrase, body.SaltValue, body.InitVector));
+                streamWriter.WriteLine(crypto.Encrypt(dataCollections[i].Info, cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector));
+                streamWriter.WriteLine(crypto.Encrypt(dataCollections[i].Login, cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector));
+                streamWriter.WriteLine(crypto.Encrypt(dataCollections[i].Password, cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector));
             }
             streamWriter.Close();
         }
 
-        public List<Data> OpenFile(string path, Body body)
+        public ObservableCollection<TableModel> OpenFile(string path)
         {
             StreamReader streamReader = new StreamReader(path);
-            List<Data> listData = new List<Data>();
-            Data dataString;
+            ObservableCollection<TableModel> dataCollections = new ObservableCollection<TableModel>();
 
             while (!streamReader.EndOfStream)
             {
                 Crypto crypto = new Crypto();
-                string _passPhrase = new DecryptPass(body.PassPhrase, body).Decrypt();
-
-                dataString = new Data
+                CryptoModel cryptoModel = new CryptoModel();
+                TableModel tableModel = new TableModel
                     (
-                    crypto.Decrypt(streamReader.ReadLine(), _passPhrase, body.SaltValue, body.InitVector),
-                    crypto.Decrypt(streamReader.ReadLine(), _passPhrase, body.SaltValue, body.InitVector),
-                    crypto.Decrypt(streamReader.ReadLine(), _passPhrase, body.SaltValue, body.InitVector),
-                    body
+                    crypto.Decrypt(streamReader.ReadLine(), cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector),
+                    crypto.Decrypt(streamReader.ReadLine(), cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector),
+                    crypto.Decrypt(streamReader.ReadLine(), cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector)
                     );
-                listData.Add(dataString);
+                dataCollections.Add(tableModel);
             }
             streamReader.Close();
-            return listData;
+            return dataCollections;
         }
 
         public bool CheckFileExists(string path)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PassDefender"
         mc:Ignorable="d"
-        Title="WindowVerify" Height="85" Width="205" WindowStyle="None" ResizeMode="NoResize" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" WindowStartupLocation="CenterOwner">
+        Title="Пароль" Height="85" Width="205" WindowStyle="None" ResizeMode="NoResize" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <local:WindowVerifyViewModel></local:WindowVerifyViewModel>
     </Window.DataContext>

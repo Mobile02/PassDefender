@@ -6,10 +6,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Left" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="Top" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">300</Value>
     </Setting>
     <Setting Name="Width" Type="System.Double" Scope="User">
       <Value Profile="(Default)">800</Value>

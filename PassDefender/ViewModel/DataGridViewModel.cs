@@ -14,7 +14,8 @@ namespace PassDefender
     {
         private ObservableCollection<TableModel> _dataCollections;
         private TableModel _tableModel;
-        private DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        private DispatcherTimer _dispatcherTimer;
+        private string filePath;
 
         private int _progress;
         private string _info;
@@ -32,6 +33,8 @@ namespace PassDefender
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             _dispatcherTimer.Tick += DispatcherTimer_Tick;
             Application.Current.MainWindow.Loaded += MainWindow_Loaded;
+            _dispatcherTimer = new DispatcherTimer();
+            filePath = Environment.CurrentDirectory + "\\keys.pdk";
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -192,8 +195,6 @@ namespace PassDefender
 
         private void Save()
         {
-            string filePath = Environment.CurrentDirectory + "\\keys.pdk";
-
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 try { filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
@@ -205,16 +206,14 @@ namespace PassDefender
 
         private void LoadData()
         {
-            string filePath = Environment.CurrentDirectory + "\\keys.pdk";
-            
             FileOperation fileOperation = new FileOperation();
 
-            if (!fileOperation.CheckFileExists(Environment.CurrentDirectory + "\\keys.pdk"))
+            if (!fileOperation.CheckFileExists(filePath))
             {
                 DataCollections.Add(new TableModel("", "", ""));
 
-                fileOperation.CreateFile(Environment.CurrentDirectory + "\\keys.pdk");
-                fileOperation.SaveFile(Environment.CurrentDirectory + "\\keys.pdk", DataCollections);
+                fileOperation.CreateFile(filePath);
+                fileOperation.SaveFile(filePath, DataCollections);
             }
 
             if (ApplicationDeployment.IsNetworkDeployed)

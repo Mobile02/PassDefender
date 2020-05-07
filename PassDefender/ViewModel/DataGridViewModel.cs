@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Deployment.Application;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -191,22 +192,38 @@ namespace PassDefender
 
         private void Save()
         {
-            new FileOperation().SaveFile("keys.pdk", DataCollections);
+            string filePath = Environment.CurrentDirectory + "\\keys.pdk";
+
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                try { filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
+                catch { filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
+            }
+
+            new FileOperation().SaveFile(filePath, DataCollections);
         }
 
         private void LoadData()
         {
+            string filePath = Environment.CurrentDirectory + "\\keys.pdk";
+            
             FileOperation fileOperation = new FileOperation();
 
-            if (!fileOperation.CheckFileExists("keys.pdk"))
+            if (!fileOperation.CheckFileExists(Environment.CurrentDirectory + "\\keys.pdk"))
             {
                 DataCollections.Add(new TableModel("", "", ""));
 
-                fileOperation.CreateFile("keys.pdk");
-                fileOperation.SaveFile("keys.pdk", DataCollections);
+                fileOperation.CreateFile(Environment.CurrentDirectory + "\\keys.pdk");
+                fileOperation.SaveFile(Environment.CurrentDirectory + "\\keys.pdk", DataCollections);
             }
 
-            DataCollections = new FileOperation().OpenFile("keys.pdk");
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                try { filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
+                catch { filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
+            }
+
+            DataCollections = new FileOperation().OpenFile(filePath);
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

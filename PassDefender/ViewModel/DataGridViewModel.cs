@@ -30,10 +30,13 @@ namespace PassDefender
         public DataGridViewModel()
         {
             DataCollections = new ObservableCollection<TableModel>();
+
+            _dispatcherTimer = new DispatcherTimer();
             _dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             _dispatcherTimer.Tick += DispatcherTimer_Tick;
+
             Application.Current.MainWindow.Loaded += MainWindow_Loaded;
-            _dispatcherTimer = new DispatcherTimer();
+            
             filePath = Environment.CurrentDirectory + "\\keys.pdk";
         }
 

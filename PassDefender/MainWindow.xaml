@@ -41,8 +41,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,26,1" Padding="2" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="Скопировать логин в буфер обмена" Command="{Binding Path=DataContext.Command_Copy_Login, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,26,1" Padding="2" 
+                                         Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="Скопировать логин в буфер обмена" 
+                                        Command="{Binding Path=DataContext.Command_Copy_Login, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <StackPanel Width="18" Height="18">
                                         <Image Source="/resourse/copy_clipboard.ico"/>
                                     </StackPanel>
@@ -55,8 +57,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Stretch">
-                                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,48,1" Padding="2" Text="{Binding Password, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"></TextBox>
-                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="{Binding ToolTip}" Command="{Binding Path=DataContext.Command_Copy_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,48,1" Padding="2" 
+                                         Text="{Binding Password, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"></TextBox>
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="{Binding ToolTip}" 
+                                        Command="{Binding Path=DataContext.Command_Copy_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                      <Image>
                                         <Image.Style>
                                             <Style>
@@ -70,7 +74,8 @@
                                         </Image.Style>
                                     </Image>
                                 </Button>
-                                <Button Width="21" Height="21" Margin="1,1,24,1" HorizontalAlignment="Right" ToolTip="Сгенерировать случайный пароль" Command="{Binding Path=DataContext.Command_Generation_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                <Button Width="21" Height="21" Margin="1,1,24,1" HorizontalAlignment="Right" ToolTip="Сгенерировать случайный пароль" 
+                                        Command="{Binding Path=DataContext.Command_Generation_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <StackPanel Width="18" Height="18">
                                         <Image Source="/resourse/generator.ico"></Image>
                                     </StackPanel>
@@ -91,7 +96,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Stretch">
-                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Center" ToolTip="Удалить запись" Command="{Binding Path=DataContext.Command_Delete_Row, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Center" ToolTip="Удалить запись" 
+                                        Command="{Binding Path=DataContext.Command_Delete_Row, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <StackPanel Width="18" Height="18">
                                         <Image Source="/resourse/delete.ico"></Image>
                                     </StackPanel>
@@ -102,13 +108,15 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="buttonAdd" HorizontalAlignment="Right" Margin="0,0,2,2" VerticalAlignment="Bottom" Width="140" Height="26" Command="{Binding Command_Add_Row, UpdateSourceTrigger=PropertyChanged}">
+        <Button x:Name="buttonAdd" HorizontalAlignment="Right" Margin="0,0,2,2" VerticalAlignment="Bottom" Width="140" Height="26" 
+                Command="{Binding Command_Add_Row, UpdateSourceTrigger=PropertyChanged}">
             <StackPanel Width="140" Height="26" Orientation="Horizontal">
                 <Image Source="/resourse/addrow.ico" Margin="0,0,0,5"></Image>
                 <Label Content="Добавить запись" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5"/>
             </StackPanel>
         </Button>
-        <Button x:Name="buttonSave" HorizontalAlignment="Left" Margin="1,0,0,2" VerticalAlignment="Bottom" Width="140" Height="26" Command="{Binding Command_Save, UpdateSourceTrigger=PropertyChanged}">
+        <Button x:Name="buttonSave" HorizontalAlignment="Left" Margin="1,0,0,2" VerticalAlignment="Bottom" Width="140" Height="26" 
+                Command="{Binding Command_Save, UpdateSourceTrigger=PropertyChanged}">
             <StackPanel Width="140" Height="26" Orientation="Horizontal">
                 <Image Source="/resourse/saveok.ico" Margin="0,0,0,5"></Image>
                 <Label Content="Сохранить" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5" Margin="15,0,0,0"/>
@@ -116,7 +124,8 @@
         </Button>
         <ProgressBar x:Name="progressBar" Height="26" Margin="180,0,180,2" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled" Maximum="1500" 
                      Value="{Binding ProgressBarValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-        <Label x:Name="Label" HorizontalAlignment="Center" Margin="0,0,20,3" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Content="{Binding LabelInfo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <Label x:Name="Label" HorizontalAlignment="Center" Margin="0,0,20,3" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" 
+               Content="{Binding LabelInfo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
     </Grid>
 </Window>

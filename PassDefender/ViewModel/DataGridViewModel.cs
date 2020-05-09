@@ -14,7 +14,7 @@ namespace PassDefender
         private ObservableCollection<TableModel> _dataCollections;
         private TableModel _tableModel;
         private DispatcherTimer _dispatcherTimer;
-        private string filePath;
+        private string _filePath;
         private int _progress;
         private string _info;
 
@@ -35,7 +35,7 @@ namespace PassDefender
 
             Application.Current.MainWindow.Loaded += MainWindow_Loaded;
             
-            filePath = Environment.CurrentDirectory + "\\keys.pdk";
+            _filePath = Environment.CurrentDirectory + "\\keys.pdk";
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -203,32 +203,36 @@ namespace PassDefender
         {
             if (ApplicationDeployment.IsNetworkDeployed)
             {
-                try { filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
-                catch { filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
+                try { _filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
+                catch { _filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
             }
 
-            new FileOperation().SaveFile(filePath, DataCollections);
+            try { new FileOperation().SaveFile(_filePath, DataCollections); }
+            catch(Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void LoadData()
         {
             FileOperation fileOperation = new FileOperation();
 
-            if (!fileOperation.CheckFileExists(filePath))
+            if (!fileOperation.CheckFileExists(_filePath))
             {
                 DataCollections.Add(new TableModel("", "", ""));
 
-                fileOperation.CreateFile(filePath);
-                fileOperation.SaveFile(filePath, DataCollections);
+                try { fileOperation.CreateFile(_filePath); }
+                catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+                
+                try { fileOperation.SaveFile(_filePath, DataCollections); }
+                catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
             }
 
             if (ApplicationDeployment.IsNetworkDeployed)
             {
-                try { filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
-                catch { filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
+                try { _filePath = AppDomain.CurrentDomain.SetupInformation.ActivationArguments.ActivationData[0]; }
+                catch { _filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
             }
 
-            DataCollections = new FileOperation().OpenFile(filePath);
+            DataCollections = new FileOperation().OpenFile(_filePath);
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)

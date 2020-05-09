@@ -21,9 +21,7 @@
                     <Setter Property="BorderThickness" Value="0"/>
                 </Trigger>
             </Style.Triggers>
-            
         </Style>
-    
     </Window.Resources>
 
     <Grid>
@@ -58,10 +56,19 @@
                         <DataTemplate>
                             <Grid HorizontalAlignment="Stretch">
                                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,48,1" Padding="2" Text="{Binding Password, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"></TextBox>
-                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="Скопировать пароль в буфер обмена" Command="{Binding Path=DataContext.Command_Copy_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
-                                    <StackPanel Width="18" Height="18">
-                                        <Image Source="/resourse/copy_clipboard.ico"></Image>
-                                    </StackPanel>
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="{Binding ToolTip}" Command="{Binding Path=DataContext.Command_Copy_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                     <Image>
+                                        <Image.Style>
+                                            <Style>
+                                                <Setter Property="Image.Source" Value="/resourse/copy_clipboard.ico"></Setter>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ImageButton}" Value="true">
+                                                        <Setter Property="Image.Source" Value="/resourse/delete.ico"></Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
                                 </Button>
                                 <Button Width="21" Height="21" Margin="1,1,24,1" HorizontalAlignment="Right" ToolTip="Сгенерировать случайный пароль" Command="{Binding Path=DataContext.Command_Generation_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <StackPanel Width="18" Height="18">
@@ -107,7 +114,8 @@
                 <Label Content="Сохранить" HorizontalAlignment="Left" Height="26" Padding="5,3,5,5" Margin="15,0,0,0"/>
             </StackPanel>
         </Button>
-        <ProgressBar x:Name="progressBar" Height="26" Margin="180,0,180,2" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled" Maximum="2000" Value="{Binding ProgressBarValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+        <ProgressBar x:Name="progressBar" Height="26" Margin="180,0,180,2" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled" Maximum="1500" 
+                     Value="{Binding ProgressBarValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
         <Label x:Name="Label" HorizontalAlignment="Center" Margin="0,0,20,3" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Content="{Binding LabelInfo, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
     </Grid>

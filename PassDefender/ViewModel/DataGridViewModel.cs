@@ -2,7 +2,6 @@
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Deployment.Application;
 using System.Windows;
 using System.Windows.Input;
@@ -16,7 +15,6 @@ namespace PassDefender
         private TableModel _tableModel;
         private DispatcherTimer _dispatcherTimer;
         private string filePath;
-
         private int _progress;
         private string _info;
 
@@ -44,11 +42,6 @@ namespace PassDefender
         {
             new WindowVerifyViewModel().Check();
             LoadData();
-        }
-
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-
         }
 
         public TableModel SelectedData
@@ -175,7 +168,17 @@ namespace PassDefender
             CryptoModel cryptoModel = new CryptoModel();
             Clipboard.Clear();
             Clipboard.SetText(new Crypto().Decrypt(SelectedData.Password, cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector));
-            _dispatcherTimer.Start();
+            
+            if (_dispatcherTimer.IsEnabled)
+            {
+                ProgressBarValue = 1500;
+                SetIcons(false);
+            }
+            else
+            {
+                _dispatcherTimer.Start();
+                SetIcons(true);
+            }
         }
 
         private void GenerationPassword()
@@ -230,13 +233,33 @@ namespace PassDefender
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            LabelInfo = "Буфер обмена будет очищен через " + $"{(2000 - ProgressBarValue) / 100}";
-            if ((ProgressBarValue += 1) == 2000)
+            LabelInfo = "Буфер обмена будет очищен через " + $"{(1500 - ProgressBarValue) / 100}";
+            if ((ProgressBarValue += 1) >= 1500)
             {
 
                 _dispatcherTimer.Stop();
                 ProgressBarValue = 0;
+                LabelInfo = "";
+
+                SetIcons(false);
                 Clipboard.Clear();
+            }
+        }
+
+        private void SetIcons(bool imageButton)
+        {
+            foreach (var tmp in _dataCollections)
+            {
+                if (imageButton)
+                {
+                    tmp.ImageButton = true;
+                    tmp.ToolTip = "Очистить буфер обмена";
+                }
+                else
+                {
+                    tmp.ImageButton = false;
+                    tmp.ToolTip = "Скопировать пароль в буфер обмена";
+                }
             }
         }
     }

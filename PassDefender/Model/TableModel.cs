@@ -8,6 +8,9 @@ namespace PassDefender
         private string _login;
         private string _password;
         private bool _cryptOnLostFocus;
+        private bool _imageButton;
+        private string _toolTip = "Скопировать пароль в буфер обмена";
+
 
         public TableModel(string info, string login, string password)
         {
@@ -52,6 +55,26 @@ namespace PassDefender
                     _password = value;
                     _cryptOnLostFocus = true;
                 }
+            }
+        }
+
+        public bool ImageButton
+        {
+            get { return _imageButton; }
+            set
+            {
+                _imageButton = value;
+                RaisePropertyChanged("ImageButton");
+            }
+        }
+
+        public string ToolTip
+        {
+            get { return _toolTip; }
+            set
+            {
+                _toolTip = value;
+                RaisePropertyChanged("ToolTip");
             }
         }
     }

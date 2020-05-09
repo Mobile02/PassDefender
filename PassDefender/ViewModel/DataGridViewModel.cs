@@ -207,7 +207,11 @@ namespace PassDefender
                 catch { _filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
             }
 
-            try { new FileOperation().SaveFile(_filePath, DataCollections); }
+            try 
+            {
+                new FileOperation().SaveFile(_filePath, DataCollections);
+                MessageBox.Show("Сохранено", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
             catch(Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 

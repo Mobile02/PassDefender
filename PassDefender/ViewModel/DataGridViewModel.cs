@@ -17,6 +17,7 @@ namespace PassDefender
         private string _filePath;
         private int _progress;
         private string _info;
+        private bool _copying;
 
         private ICommand _Command_Copy_Login;
         private ICommand _Command_Copy_Password;
@@ -34,7 +35,7 @@ namespace PassDefender
             _dispatcherTimer.Tick += DispatcherTimer_Tick;
 
             Application.Current.MainWindow.Loaded += MainWindow_Loaded;
-            
+
             _filePath = Environment.CurrentDirectory + "\\keys.pdk";
         }
 
@@ -42,6 +43,16 @@ namespace PassDefender
         {
             new WindowVerifyViewModel().Check();
             LoadData();
+        }
+
+        public bool Copying
+        {
+            get { return _copying; }
+            set
+            {
+                _copying = value;
+                RaisePropertyChanged("Copying");
+            }
         }
 
         public TableModel SelectedData
@@ -168,16 +179,16 @@ namespace PassDefender
             CryptoModel cryptoModel = new CryptoModel();
             Clipboard.Clear();
             Clipboard.SetText(new Crypto().Decrypt(SelectedData.Password, cryptoModel.PassPhrase, cryptoModel.SaltValue, cryptoModel.InitVector));
-            
+
             if (_dispatcherTimer.IsEnabled)
             {
                 ProgressBarValue = 1500;
-                SetIcons(false);
+                Copying = false;
             }
             else
             {
                 _dispatcherTimer.Start();
-                SetIcons(true);
+                Copying = true;
             }
         }
 
@@ -207,12 +218,12 @@ namespace PassDefender
                 catch { _filePath = Environment.CurrentDirectory + "\\keys.pdk"; }
             }
 
-            try 
+            try
             {
                 new FileOperation().SaveFile(_filePath, DataCollections);
                 MessageBox.Show("Сохранено", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
 
         private void LoadData()
@@ -225,7 +236,7 @@ namespace PassDefender
 
                 try { fileOperation.CreateFile(_filePath); }
                 catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
-                
+
                 try { fileOperation.SaveFile(_filePath, DataCollections); }
                 catch (Exception ex) { MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
             }
@@ -249,25 +260,8 @@ namespace PassDefender
                 ProgressBarValue = 0;
                 LabelInfo = "";
 
-                SetIcons(false);
+                Copying = false;
                 Clipboard.Clear();
-            }
-        }
-
-        private void SetIcons(bool imageButton)
-        {
-            foreach (var tmp in _dataCollections)
-            {
-                if (imageButton)
-                {
-                    tmp.ImageButton = true;
-                    tmp.ToolTip = "Очистить буфер обмена";
-                }
-                else
-                {
-                    tmp.ImageButton = false;
-                    tmp.ToolTip = "Скопировать пароль в буфер обмена";
-                }
             }
         }
     }

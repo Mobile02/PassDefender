@@ -27,8 +27,7 @@
     <Grid>
         <DataGrid x:Name="dataGrid" Margin="1,1,1,30" CanUserResizeRows="False" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" 
                   CanUserReorderColumns="False" CanUserSortColumns="False" HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" SelectionMode="Single"
-                  ItemsSource="{Binding DataCollections}" SelectedItem="{Binding SelectedData, Mode=TwoWay}" BorderBrush="White" FocusVisualStyle="{x:Null}" 
-                  >
+                  ItemsSource="{Binding DataCollections}" SelectedItem="{Binding SelectedData, Mode=TwoWay}" BorderBrush="White" FocusVisualStyle="{x:Null}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Описание ресурса" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -59,14 +58,24 @@
                             <Grid HorizontalAlignment="Stretch">
                                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,48,1" Padding="2" 
                                          Text="{Binding Password, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"></TextBox>
-                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" ToolTip="{Binding ToolTip}" 
+                                <Button Width="21" Height="21" Margin="1" HorizontalAlignment="Right" 
                                         Command="{Binding Path=DataContext.Command_Copy_Password, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <Button.Style>
+                                        <Style>
+                                            <Setter Property="ToolTip.ToolTip" Value="Скопировать пароль в буфер обмена"></Setter>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=DataContext.Copying, RelativeSource={RelativeSource AncestorType=Window}}" Value="true">
+                                                    <Setter Property="ToolTip.ToolTip" Value="Очистить буфер обмена"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                      <Image>
                                         <Image.Style>
                                             <Style>
                                                 <Setter Property="Image.Source" Value="/resourse/copy_clipboard.ico"></Setter>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding ImageButton}" Value="true">
+                                                    <DataTrigger Binding="{Binding Path=DataContext.Copying, RelativeSource={RelativeSource AncestorType=Window}}" Value="true">
                                                         <Setter Property="Image.Source" Value="/resourse/delete.ico"></Setter>
                                                     </DataTrigger>
                                                 </Style.Triggers>
